@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Media;
+//Meg Feore
+//December 6/21
+//Are you able to win square chaser?
 
 namespace SquareChaser
 {
