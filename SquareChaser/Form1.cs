@@ -20,6 +20,7 @@ namespace SquareChaser
         Rectangle boostSquare = new Rectangle(180, 260, 10, 10);
         Rectangle gameBoard = new Rectangle(0, 0, 370, 316);
         Rectangle gameOutline = new Rectangle(0, 0, 370, 316);
+        Rectangle bluePower = new Rectangle(50, 50, 15, 15);
 
         //setting the brushes and pens
         SolidBrush purple = new SolidBrush(Color.Purple);
@@ -28,6 +29,7 @@ namespace SquareChaser
         SolidBrush yellow = new SolidBrush(Color.Yellow);
         SolidBrush black = new SolidBrush(Color.Black);
         Pen whitePen = new Pen(Color.White, 10);
+        //SolidBrush blue = new SolidBrush(Color.Blue);
 
         //setting speeds
         int player1Speed = 5;
@@ -61,10 +63,17 @@ namespace SquareChaser
         SoundPlayer yellowSound = new SoundPlayer(Properties.Resources.Swoosh);
         SoundPlayer wallSound = new SoundPlayer(Properties.Resources.Blop);
 
+        ////blue power square values
+        //int time = 0;
+        //int bluePower.X = -100;
+        //int bluePower.Y = -100;
+
+
         public Form1()
         {
             InitializeComponent();
-
+            //time = randGen.Next(50, 300);
+            
             //text on instruction label
             textLabel.Text = "To win the game you must collect the white square 5 times. " +
                 "You can gain speed by collecting the yellow square. " +
@@ -160,9 +169,10 @@ namespace SquareChaser
             {
                 player1.Y -= player1Speed;
 
-                if (player1.Y <= 5)
+                if (player1.Y <= 7)
                 {
                     wallSound.Play();
+                    player1.Y = 5;
                 }
             }
 
@@ -170,22 +180,12 @@ namespace SquareChaser
             {
                 player1.Y += player1Speed;
 
-                if (player1.Y >= 295)
+                if (player1.Y >= 291)
                 {
                     wallSound.Play();
+                    player1.Y = 291;
                 }
             }
-
-            //if (aDown)
-            //{
-            //    player1.X -= player1Speed;
-
-            //    if (player1.X < 6)
-            //    {
-            //        wallSound.Stop();
-            //        wallSound.Play();
-            //        player1.X = 5;
-            //    }
 
 
             // move player 1 left and right
@@ -193,9 +193,10 @@ namespace SquareChaser
             {
                 player1.X -= player1Speed;
 
-                if (player1.X <= 10)
+                if (player1.X <= 6)
                 {
                     wallSound.Play();
+                    player1.X = 5;
                 }
 
             }
@@ -216,9 +217,10 @@ namespace SquareChaser
             {
                 player2.Y -= player2Speed;
 
-                if (player2.Y <= 5)
+                if (player2.Y <= 7)
                 {
                     wallSound.Play();
+                    player2.Y = 5;
                 }
             }
 
@@ -226,9 +228,10 @@ namespace SquareChaser
             {
                 player2.Y += player2Speed;
 
-                if (player2.Y >= 295)
+                if (player2.Y >= 291)
                 {
                     wallSound.Play();
+                    player2.Y = 291;
                 }
             }
 
@@ -237,9 +240,10 @@ namespace SquareChaser
             {
                 player2.X -= player2Speed;
 
-                if (player2.X <= 10)
+                if (player2.X <= 6)
                 {
                     wallSound.Play();
+                    player2.X = 5;
                 }
             }
 
@@ -250,6 +254,7 @@ namespace SquareChaser
                 if (player2.X >= 340)
                 {
                     wallSound.Play();
+                    player2.X = 345;
                 }
             }
 
@@ -277,7 +282,7 @@ namespace SquareChaser
             if (player1.IntersectsWith(boostSquare))
             {
                 yellowSound.Play();
-                square.X = player1.X + square.Width;
+                boostSquare.X = player1.X + boostSquare.Width;
                 MoveBoostSquare();
                 MovePlayer1();
                 player1Speed++;
@@ -285,7 +290,7 @@ namespace SquareChaser
             else if (player2.IntersectsWith(boostSquare))
             {
                 yellowSound.Play();
-                square.X = player2.X - square.Width;
+                boostSquare.X = player2.X - boostSquare.Width;
                 MoveBoostSquare();
                 MovePlayer2();
                 player2Speed++;
@@ -305,6 +310,42 @@ namespace SquareChaser
                 winnerLabel.Text = "Player 2  Wins!!";
             }
 
+            ////making the blue power square appear on screen for different times
+            //time--;
+            //if (time == 250)
+            //{
+            //    blueX = -100;
+            //    blueY = -100;
+            //}
+
+            //if (time == 0)
+            //{
+            //    time = randGen.Next(50, 500);
+            //    bluePower.X = randGen.Next(0, 320);
+            //    bluePower.Y = randGen.Next(0, 260);
+            //}
+
+            ////setting the power up for the blue square
+            //if (player1.IntersectsWith(bluePower))
+            //{
+            //    if (time != 0)
+            //    {
+            //        player2.X = -100;
+            //        player2.Y = -100;
+            //        boostSquare.X = -100;
+            //        boostSquare.Y = -100;
+            //        bluePower.X = -100;
+            //        bluePower.Y = -100;
+            //    }
+            //}
+            //else if (time == 0)
+            //{
+            //    MoveSquare();
+            //    MoveBoostSquare();
+            //    BluePowerMove();
+            //    MovePlayer2();
+            //}
+
             Refresh();
         }
 
@@ -316,6 +357,7 @@ namespace SquareChaser
             e.Graphics.FillRectangle(white, square);
             e.Graphics.FillRectangle(yellow, boostSquare);
             e.Graphics.DrawRectangle(whitePen, gameOutline);
+            //e.Graphics.FillRectangle(Brushes.DodgerBlue, bluePower);
         }
 
         public void MoveSquare()
@@ -327,6 +369,16 @@ namespace SquareChaser
             square.X = randomX;
             square.Y = randomY;
         }
+
+        //public void BluePowerMove()
+        //{
+        //    // get a random value for each and place them in the variables 
+        //    randomX = randGen.Next(1, 340);
+        //    randomY = randGen.Next(1, 290);
+
+        //    bluePower.X = randomX;
+        //    bluePower.Y = randomY;
+        //}
 
         public void MoveBoostSquare()
         {
